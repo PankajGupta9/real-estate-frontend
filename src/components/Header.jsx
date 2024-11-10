@@ -57,6 +57,11 @@ export default function Header() {
               About
             </li>
           </Link>
+          <Link to='/contact'>
+            <li className='hidden sm:inline text-white hover:underline'>
+              Contact
+            </li>
+          </Link>
           <Link to='/profile'>
             {currentUser ? (
               <img
@@ -65,7 +70,7 @@ export default function Header() {
                 alt='profile'
               />
             ) : (
-              <li className=' text-slate-700 hover:underline'> Sign in</li>
+              <li className=' text-white hover:underline'> Sign in</li>
             )}
           </Link>
         </ul>
