@@ -73,11 +73,13 @@ export default function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem('access_token');
       dispatch(updateUserStart());
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });
@@ -96,9 +98,14 @@ export default function Profile() {
 
   const handleDeleteUser = async () => {
     try {
+      const token = localStorage.getItem('access_token');
       dispatch(deleteUserStart());
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
       });
       const data = await res.json();
       if (data.success === false) {
@@ -129,23 +136,37 @@ export default function Profile() {
   const handleShowListings = async () => {
     try {
       setShowListingsError(false);
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/listings/${currentUser._id}`);
+      const token = localStorage.getItem('access_token');
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/listings/${currentUser.rest._id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        // credentials: 'include',
+      });
       const data = await res.json();
       if (data.success === false) {
         setShowListingsError(true);
         return;
       }
-
       setUserListings(data);
     } catch (error) {
+      console.error('Error fetching listings:', error); // Log the full error
       setShowListingsError(true);
     }
   };
+  
 
   const handleListingDelete = async (listingId) => {
     try {
+      const token = localStorage.getItem('access_token');
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/listing/delete/${listingId}`, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
       });
       const data = await res.json();
       if (data.success === false) {
