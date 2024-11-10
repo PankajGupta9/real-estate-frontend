@@ -126,23 +126,26 @@ export default function CreateListing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem('access_token');
       if (formData.imageUrls.length < 1)
         return setError('You must upload at least one image');
       if (+formData.regularPrice < +formData.discountPrice)
         return setError('Discount price must be lower than regular price');
       setLoading(true);
       setError(false);
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/listing/create`, {
+      const res = await fetch(`http://localhost:5000/api/listing/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...formData,
-          userRef: currentUser._id,
+          userRef: currentUser.rest._id,
         }),
       });
       const data = await res.json();
+      console.log(data)
       setLoading(false);
       if (data.success === false) {
         setError(data.message);
