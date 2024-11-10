@@ -1,4 +1,3 @@
-// Home.js
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,7 +5,7 @@ import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
 import "swiper/css/bundle";
 import ListingItem from "../components/ListingItem";
-import Header from "../components/Home-header"; // Import the Header component
+import Header from "../components/Home-header"; 
 
 SwiperCore.use([Navigation]);
 
@@ -70,7 +69,7 @@ export default function Home() {
           place with ease
         </h1>
         <div className="text-gray-400 text-xs sm:text-sm">
-          Sahand Estate is the best place to find your next perfect place to
+          Pankaj Estate is the best place to find your next perfect place to
           live.
           <br />
           We have a wide range of properties for you to choose from.
